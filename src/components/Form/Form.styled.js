@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const FormStyled = styled('form')`
   width: 300px;
   border: 2px solid greenyellow;
-  padding: 15px;
+  padding: 16px;
   background-color: black;
 
   label {
