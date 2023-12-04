@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { Form } from './Form/Form';
 import { ContactList } from './ContactList/ContactList';
-import { nanoid } from 'nanoid';
 import { Filter } from './Filter/Filter';
 
 export class App extends Component {
@@ -14,20 +13,6 @@ export class App extends Component {
     this.setState({ [name]: value });
   };
 
-  addContact = e => {
-    e.preventDefault();
-
-    const newContact = {
-      name: this.state.name,
-      number: this.state.number,
-      id: nanoid(),
-    };
-
-    this.setState(prevState => ({
-      contacts: [newContact, ...prevState.contacts],
-    }));
-  };
-
   getFilteredContacts = () => {
     return this.state.contacts.filter(contact =>
       contact.name
@@ -36,17 +21,33 @@ export class App extends Component {
     );
   };
 
+  createContact = data => {
+    return this.setState(prevState => ({
+      contacts: [data, ...prevState.contacts],
+    }));
+  };
+
+  deleteContact = id => {
+    console.log(id);
+    this.setState(prev => ({
+      contacts: prev.contacts.filter(el => el.id !== id),
+    }));
+  };
+
   render() {
     const filterContacts = this.getFilteredContacts();
 
     return (
       <>
         <h1 style={{ color: 'pink' }}>Phonebook</h1>
-        <Form onChange={this.handleChange} onSubmit={this.addContact} />
+        <Form createContact={this.createContact} />
         <h2 style={{ color: 'pink' }}>Contacts</h2>
         <Filter onChange={this.handleChange} value={this.state.filter} />
 
-        <ContactList contacts={filterContacts} />
+        <ContactList
+          contacts={filterContacts}
+          deleteContact={this.deleteContact}
+        />
       </>
     );
   }

@@ -1,16 +1,22 @@
-const { Component } = require('react');
+import { Component } from 'react';
+import { ContactListStyled } from './ContactList.styled';
 
 export class ContactList extends Component {
   render() {
     return (
       <>
-        <ul>
+        <ContactListStyled>
           {this.props.contacts.map(contact => (
-            <li style={{ color: 'pink' }} key={contact.id} id={contact.id}>
-              {contact.name}: {contact.number}
+            <li key={contact.id} id={contact.id}>
+              <p style={{ color: 'pink' }}>
+                {contact.name}: {contact.number}
+              </p>
+              <button onClick={() => this.props.deleteContact(contact.id)}>
+                Delete
+              </button>
             </li>
           ))}
-        </ul>
+        </ContactListStyled>
       </>
     );
   }
