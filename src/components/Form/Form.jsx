@@ -14,11 +14,12 @@ export class Form extends Component {
 
   addContact = e => {
     e.preventDefault();
+    let id = nanoid();
 
     const newContact = {
       name: this.state.name,
       number: this.state.number,
-      id: nanoid(),
+      id: id,
     };
 
     this.props.createContact(newContact);

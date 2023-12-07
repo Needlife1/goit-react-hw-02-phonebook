@@ -22,7 +22,12 @@ export class App extends Component {
   };
 
   createContact = data => {
-    return this.setState(prevState => ({
+    const { contacts } = this.state;
+
+    if (contacts.some(contact => contact.name === data.name)) {
+      return;
+    }
+    this.setState(prevState => ({
       contacts: [data, ...prevState.contacts],
     }));
   };
@@ -40,7 +45,10 @@ export class App extends Component {
     return (
       <>
         <h1 style={{ color: 'pink' }}>Phonebook</h1>
-        <Form createContact={this.createContact} />
+        <Form
+          createContact={this.createContact}
+          contacts={this.state.contacts}
+        />
         <h2 style={{ color: 'pink' }}>Contacts</h2>
         <Filter onChange={this.handleChange} value={this.state.filter} />
 
